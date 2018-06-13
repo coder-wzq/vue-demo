@@ -1,19 +1,13 @@
-const STORAGE_FILTER_KEY = 'VUE_FILTER'
-const STORAGE_TODOS_KEY = 'VUE_TODOS'
-const MODEL = {
-  FILTER: localStorage.getItem(STORAGE_FILTER_KEY) || 'All',
-  TODOS: JSON.parse(localStorage.getItem(STORAGE_TODOS_KEY)) || []
-}
+const STORAGE_AUTH_TOKEN = 'AUTH_TOKEN'
+const STORAGE_USER_NAME = 'USER_NAME'
 
 export default {
-  filter: {
-    get: () => MODEL.FILTER,
-    save: path => localStorage.setItem(STORAGE_FILTER_KEY, path)
+  userAuth: {
+    get: () => localStorage.getItem(STORAGE_AUTH_TOKEN) || '',
+    save: token => localStorage.setItem(STORAGE_AUTH_TOKEN, token)
   },
-  todos: {
-    fetch: () => MODEL.TODOS,
-    save: () => {
-      localStorage.setItem(STORAGE_TODOS_KEY, JSON.stringify(MODEL.TODOS))
-    }
+  userName: {
+    get: () => localStorage.getItem(STORAGE_AUTH_TOKEN) || '',
+    save: userName => localStorage.setItem(STORAGE_USER_NAME, userName)
   }
 }

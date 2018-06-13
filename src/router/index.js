@@ -1,27 +1,26 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import First from '@/components/demo/First'
-import Todos from '@/components/temp/Body'
+import Vue from 'vue';
+import Router from 'vue-router';
+import {routers} from './router';
+import Store from '@/store/index';
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'default',
-      redirect: '/first',
-      component: First
-    },
-    {
-      path: '/todos/:filter',
-      name: 'Todos',
-      component: Todos
-    },
-    {
-      path: '/first',
-      name: 'First',
-      component: First
-    }
-  ]
-})
+const RouterConfig = {
+  routes: routers
+};
+
+export const router = new Router(RouterConfig);
+const whiteList = ['/login']
+
+router.beforeEach((to, from, next) => {
+  console.log(Store.userAuth.get());
+  if (whiteList.indexOf(to.path) !== -1) {
+    next()
+  } else if (!Store.userAuth.get() && to.name !== 'login') {
+    next({
+      path: '/login'
+    });
+  }else{
+    next()
+  }
+});

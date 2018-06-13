@@ -1,6 +1,6 @@
 <template>
   <div>
-    123123123
+    this is body!
   </div>
 </template>
 

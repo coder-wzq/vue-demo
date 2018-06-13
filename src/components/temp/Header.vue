@@ -1,13 +1,7 @@
 <template>
-  <header class="header">
-    <h1>todos</h1>
-    <input
-      class="new-todo"
-      autofocus autocomplete="off"
-      placeholder="What needs to be done?"
-      v-model="newTodo" @keyup.enter="addTodo">
-  </header>
+  <div id="header">
 
+  </div>
 </template>
 
 <script>
@@ -25,3 +19,10 @@
     }
   }
 </script>
+<style scoped>
+#header{
+  width: 100%;
+  height: 50px;
+  background-color: cadetblue;
+}
+</style>
