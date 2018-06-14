@@ -15,12 +15,18 @@ const whiteList = ['/login']
 router.beforeEach((to, from, next) => {
   console.log(Store.userAuth.get());
   if (whiteList.indexOf(to.path) !== -1) {
-    next()
+    if (to.name === 'login' && Store.userAuth.get()) {
+      next({
+        path: '/first'
+      });
+    } else {
+      next()
+    }
   } else if (!Store.userAuth.get() && to.name !== 'login') {
     next({
       path: '/login'
     });
-  }else{
+  } else {
     next()
   }
 });

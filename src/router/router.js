@@ -1,14 +1,17 @@
-import Main from '@/components/Main'
 import Todos from '@/components/temp/Body'
-import Login from '@/components/login/Login'
 
-export const login = {
+export const defaultRouter = {
   path: '/',
+  name: 'default',
+  redirect: '/login'
+}
+
+export const loginRouter = {
+  path: '/login',
   name: 'login',
   meta: {
     title: 'login'
   },
-  redirect: '/login',
   component: () =>
     import('@/components/login/Login.vue')
 }
@@ -30,6 +33,7 @@ export const appRouter = [
 
 
 export const routers = [
-  login,
+  defaultRouter,
+  loginRouter,
   ...appRouter
 ];
