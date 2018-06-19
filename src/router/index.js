@@ -13,7 +13,6 @@ export const router = new Router(RouterConfig);
 const whiteList = ['/login']
 
 router.beforeEach((to, from, next) => {
-  console.log(Store.userAuth.get());
   if (whiteList.indexOf(to.path) !== -1) {
     if (to.name === 'login' && Store.userAuth.get()) {
       next({

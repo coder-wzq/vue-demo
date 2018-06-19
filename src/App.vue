@@ -5,8 +5,45 @@
 </template>
 
 <script>
+  import {serverBaseUrl} from '@/config/config'
+
   export default {
-    name: 'App'
+    name: 'App',
+    data() {
+      return {
+        message: '',
+        rows: [],
+        serverBaseUrl: serverBaseUrl,
+        stompClient: null,
+        time :''
+      }
+
+    },
+    methods: {
+      //连接
+      connect() {
+        this.stompClient = Stomp.over(new SockJS(this.serverBaseUrl + 'live'));
+        this.stompClient.debug = () => {};
+        this.stompClient.connect({},(frame)=>{
+          console.log(frame);
+          this.stompClient.subscribe('/topic/send', (msg)=> {
+            this.rows.push(JSON.parse(msg.body));
+          });
+          // 注册推送时间回调
+          this.stompClient.subscribe('/topic/callback', (r)=> {
+            this.time = '当前时间'+r.body
+          });
+        });
+      },
+      send() {
+        this.stompClient.send("/app/send", {}, JSON.stringify({
+          'message': this.message
+        }));
+      }
+    },
+    mounted() {
+      // this.connect()
+    }
   }
 </script>
 
@@ -17,6 +54,11 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
+  }
+
+  body {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
   }
 </style>
